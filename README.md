@@ -1,4 +1,4 @@
-scapy-http
+Scapy-http
 ==========
 
 Support for parsing HTTP in Scapy (http://www.secdev.org/projects/scapy/).
@@ -168,3 +168,7 @@ for p in packets:
 ###[ Raw ]###
                  load      = '<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body bgcolor="white">\r\n<center><h1>301 Moved Permanently</h1></center>\r\n<hr><center>nginx/1.0.13</center>\r\n</body>\r\n</html>\r\n'
 ```
+
+## Authors
+* Steeve Barbeau  ( http://www.sbarbeau.fr )
+* Luca Invernizzi ( http://lucainvernizzi.net )
