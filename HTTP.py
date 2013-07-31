@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Author : Steeve Barbeau, Luca Invernizzi
+# This program is published under a GPLv2 license
 
 import re
 from scapy.all import TCP, bind_layers, Packet, StrField
