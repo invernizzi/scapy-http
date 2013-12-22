@@ -187,16 +187,23 @@ class HTTP(Packet):
     def guess_payload_class(self, payload):
         ''' Decides if the payload is an HTTP Request or Response, or
             something else '''
-        prog = re.compile("^(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT)")
-        result = prog.search(payload)
-        if result:
-            return HTTPRequest
-        else:
-            prog = re.compile("^HTTP/((0\.9)|(1\.0)|(1\.1))\ [0-9]{3}.*")
-            result = prog.search(payload)
+        try:
+            prog = re.compile(
+                r"^(?:OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT) "
+                r"(?:.+?) "
+                r"HTTP/\d\.\d$"
+            )
+            req = payload[:payload.index("\r\n")]
+            result = prog.match(req)
             if result:
-                return HTTPResponse
+                return HTTPRequest
+            else:
+                prog = re.compile(r"^HTTP/\d\.\d \d\d\d .+?$")
+                result = prog.match(req)
+                if result:
+                    return HTTPResponse
+        except:
+            pass
         return Packet.guess_payload_class(self, payload)
-
 
 bind_layers(TCP, HTTP)
