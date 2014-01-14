@@ -78,6 +78,8 @@ class HTTPRequest(Packet):
     name = "HTTP Request"
     http_methods = "^(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT)"
     fields_desc = [StrField("Method", None, fmt="H"),
+                StrField("Path", None, fmt="H"),
+                StrField("Http-Version", None, fmt="H"),
                 StrField("Host", None, fmt="H"),
                 StrField("User-Agent", None, fmt="H"),
                 StrField("Accept", None, fmt="H"),
@@ -123,7 +125,11 @@ class HTTPRequest(Packet):
     def do_dissect(self, s):
         ''' From the HTTP packet string, populate the scapy object '''
         first_line, body = _dissect_headers(self, s)
-        self.setfieldval('Method', first_line)
+        Method, Path, HTTPVersion = re.split("\s+", first_line)
+        
+        self.setfieldval('Method', Method)
+        self.setfieldval('Path', Path)
+        self.setfieldval('Http-Version', HTTPVersion)
         return body
 
     def self_build(self, field_pos_list=None):
