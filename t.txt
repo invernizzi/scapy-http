@@ -1,30 +1,3 @@
-Scapy-http
-==========
-
-Support for parsing HTTP in Scapy (http://www.secdev.org/projects/scapy/).
-
-Example
---------
-
-## Code
-```python
-#!/usr/bin/env python
-try:
-    import scapy.all as scapy
-except ImportError:
-    import scapy
-
-import HTTP
-
-packets = scapy.rdpcap('example_network_traffic.pcap')
-for p in packets:
-    print '=' * 78
-    p.show()
-```
-
-## Output
-
-```python
 ==============================================================================
 ###[ Ethernet ]###
   dst       = 00:21:29:77:3d:d8
@@ -168,9 +141,3 @@ for p in packets:
               Additional-Headers= None
 ###[ Raw ]###
                  load      = '<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body bgcolor="white">\r\n<center><h1>301 Moved Permanently</h1></center>\r\n<hr><center>nginx/1.0.13</center>\r\n</body>\r\n</html>\r\n'
-
-```
-
-## Authors
-* Steeve Barbeau  ( http://www.sbarbeau.fr )
-* Luca Invernizzi ( http://lucainvernizzi.net )
