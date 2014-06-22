@@ -17,7 +17,6 @@ Installation
 	>                    "sebek", "skinny", "smb", "snmp", "tftp", "x509", "bluetooth", "dhcp6", "llmnr", "sctp", "vrrp"]
 ```
 3. test
-4. 
 ```
 	#> scapy
 	   
@@ -32,7 +31,7 @@ Installation
 
 Troubleshooting
 ----------------
-
+In case scapy complains that it cannot load layer http make sure you've copied/linked http.py to all your scapy/layers dirs (e.g. dist-packages).
 
 	
 
