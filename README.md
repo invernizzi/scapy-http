@@ -7,8 +7,9 @@ Support for parsing HTTP in Scapy (http://www.secdev.org/projects/scapy/).
 Installation
 --------
 1. deploy HTTP.py to ./scapy/layers
-2. modify ./scapy/config.py to autoload the HTTP layer
-```
+2. modify ./scapy/config.py to autoload the HTTP layer by adding it to the load_layers list in config.py
+
+	```
 	config.py::Conf::load_layers 
 	375,376c375
 	<                    "sebek", "skinny", "smb", "snmp", "tftp", "x509", "bluetooth", "dhcp6", "llmnr", "sctp", "vrrp",
@@ -17,7 +18,8 @@ Installation
 	>                    "sebek", "skinny", "smb", "snmp", "tftp", "x509", "bluetooth", "dhcp6", "llmnr", "sctp", "vrrp"]
 ```
 3. test
-```
+
+	```
 	#> scapy
 	   
 	>>> HTTP
@@ -27,7 +29,7 @@ Installation
 	# take some time to surf the web and hit ctrl+c ...
 	>>> x[HTTP]
 	<HTTP from Sniffed: TCP:38 UDP:0 ICMP:0 Other:0>
-```
+	```
 
 Troubleshooting
 ----------------
