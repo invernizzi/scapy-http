@@ -5,7 +5,7 @@ try:
 except ImportError:
     import scapy
 
-import HTTP
+import http
 
 packets = scapy.rdpcap('example_network_traffic.pcap')
 for p in packets:
