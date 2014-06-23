@@ -31,6 +31,6 @@ setup(
     author=['Luca Invernizzi, Steeve Barbeau'],
     author_email=['invernizzi.l@gmail.com'],
     url='https://github.com/invernizzi/scapy-http',
-    download_url='https://github.com/invernizzi/scapy-http/tarball/1.0',
+    download_url='https://github.com/invernizzi/scapy-http/tarball/1.1',
     keywords=['http', 'scapy', 'newtork', 'dissect', 'packets']
 )
