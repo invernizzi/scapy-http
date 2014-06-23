@@ -4,7 +4,9 @@
 # This program is published under a GPLv2 license
 
 import re
-from scapy.all import TCP, bind_layers, Packet, StrField
+from scapy.packet import Packet, bind_layers
+from scapy.fields import StrField
+from scapy.layers.inet import TCP
 
 
 def _canonicalize_header(name):
