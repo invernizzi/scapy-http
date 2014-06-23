@@ -6,36 +6,13 @@ Support for parsing HTTP in Scapy (http://www.secdev.org/projects/scapy/).
 
 Installation
 --------
-1. deploy HTTP.py to ./scapy/layers
-2. modify ./scapy/config.py to autoload the HTTP layer by adding it to the load_layers list in config.py
 
-	```
-	config.py::Conf::load_layers 
-	375,376c375
-	<                    "sebek", "skinny", "smb", "snmp", "tftp", "x509", "bluetooth", "dhcp6", "llmnr", "sctp", "vrrp",
-	<                    "http", ]
-	---
-	>                    "sebek", "skinny", "smb", "snmp", "tftp", "x509", "bluetooth", "dhcp6", "llmnr", "sctp", "vrrp"]
+Execute:
+
+```bash
+sudo python setup.py install
 ```
-3. test
 
-	```
-	#> scapy
-	   
-	>>> HTTP
-	<class 'scapy.layers.http.HTTP'>
-	   
-	>>> x = sniff()
-	# take some time to surf the web and hit ctrl+c ...
-	>>> x[HTTP]
-	<HTTP from Sniffed: TCP:38 UDP:0 ICMP:0 Other:0>
-	```
-
-Troubleshooting
-----------------
-In case scapy complains that it cannot load layer http make sure you've copied/linked http.py to all your scapy/layers dirs (e.g. dist-packages).
-
-	
 
 Example
 --------
