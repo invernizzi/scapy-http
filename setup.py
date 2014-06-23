@@ -24,9 +24,13 @@ install.sub_commands.append(('install_into_scapy', install_into_scapy))
 
 setup(
     name="scapy-http",
+    packages="[scapy_http]",
     version="1.0",
     description="HTTP-layer support for Scapy",
     install_requires=['scapy'],
-    author = ['Luca Invernizzi, Steeve Barbeau']
+    author=['Luca Invernizzi, Steeve Barbeau'],
+    author_email=['invernizzi.l@gmail.com'],
+    url='https://github.com/invernizzi/scapy-http',
+    download_url='https://github.com/invernizzi/scapy-http/scapy_http/tarball/1.0',
+    keywords=['http', 'scapy', 'newtork', 'dissect', 'packets']
 )
-
