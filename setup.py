@@ -7,14 +7,13 @@ import shutil
 def install_into_scapy(a):
     print 'Installing the HTTP layer extension into Scapy...',
     import scapy
-    import scapy_http
     target_path = os.path.join(
         os.path.dirname(scapy.__file__),
         'layers'
     )
     source_path = os.path.join(
-        os.path.dirname(scapy_http.__file__),
-        'http.py'
+        os.path.dirname(__file__),
+        'scapy_http/http.py'
     )
     shutil.copy2(source_path, target_path)
     print 'done!'
@@ -31,6 +30,6 @@ setup(
     author=['Luca Invernizzi, Steeve Barbeau'],
     author_email=['invernizzi.l@gmail.com'],
     url='https://github.com/invernizzi/scapy-http',
-    download_url='https://github.com/invernizzi/scapy-http/tarball/1.0',
+    download_url='https://github.com/invernizzi/scapy-http/tarball/1.2',
     keywords=['http', 'scapy', 'newtork', 'dissect', 'packets']
 )
