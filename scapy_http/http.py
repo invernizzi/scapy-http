@@ -214,4 +214,9 @@ class HTTP(Packet):
             pass
         return Packet.guess_payload_class(self, payload)
 
-bind_layers(TCP, HTTP)
+bind_layers(TCP, HTTP, dport=80)
+bind_layers(TCP, HTTP, sport=80)
+
+#For Proxy
+bind_layers(TCP, HTTP, sport=8080)
+bind_layers(TCP, HTTP, dport=8080)
