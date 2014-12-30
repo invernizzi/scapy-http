@@ -5,8 +5,12 @@ try:
 except ImportError:
     import scapy
 
-# If you installed the package, you can skip this import
-import scapy_http.http
+try:
+    # This import works from the project directory
+    import scapy_http.http
+except ImportError:
+    # If you installed this package via pip, you just need to execute this
+    from scapy.layers import http
 
 packets = scapy.rdpcap('example_network_traffic.pcap')
 for p in packets:
