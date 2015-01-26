@@ -10,6 +10,11 @@ Installation
 Execute:
 
 ```bash
+sudo pip install scapy-http
+```
+
+Or, to install from source
+```bash
 sudo python setup.py install
 ```
 
