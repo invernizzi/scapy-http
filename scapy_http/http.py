@@ -206,7 +206,7 @@ class HTTP(Packet):
             if result:
                 return HTTPRequest
             else:
-                prog = re.compile(r"^HTTP/\d\.\d \d\d\d .+?$")
+                prog = re.compile(r"^HTTP/\d\.\d \d\d\d .*$")
                 result = prog.match(req)
                 if result:
                     return HTTPResponse
