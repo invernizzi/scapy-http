@@ -26,9 +26,7 @@ setup(
     packages=['scapy_http'],
     version="1.5",
     description="HTTP-layer support for Scapy",
-    # Scapy is still a requirement, but it cannot be
-    # currently installed via pypi
-   #  install_requires=['scapy']
+    install_requires=['scapy'],
     author=['Luca Invernizzi, Steeve Barbeau'],
     author_email=['invernizzi.l@gmail.com'],
     url='https://github.com/invernizzi/scapy-http',
