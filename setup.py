@@ -3,6 +3,8 @@ from distutils.command.install import install
 import os.path
 import shutil
 
+VERSION = '1.6'
+
 
 def install_into_scapy(a):
     print('Installing the HTTP layer extension into Scapy...')
@@ -24,12 +26,12 @@ install.sub_commands.append(('install_into_scapy', install_into_scapy))
 setup(
     name="scapy-http",
     packages=['scapy_http'],
-    version="1.5",
+    version=VERSION,
     description="HTTP-layer support for Scapy",
     install_requires=['scapy'],
     author=['Luca Invernizzi, Steeve Barbeau'],
     author_email=['invernizzi.l@gmail.com'],
     url='https://github.com/invernizzi/scapy-http',
-    download_url='https://github.com/invernizzi/scapy-http/tarball/1.5',
+    download_url='https://github.com/invernizzi/scapy-http/tarball/' + VERSION,
     keywords=['http', 'scapy', 'newtork', 'dissect', 'packets']
 )
