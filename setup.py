@@ -5,7 +5,7 @@ import shutil
 
 
 def install_into_scapy(a):
-    print 'Installing the HTTP layer extension into Scapy...',
+    print('Installing the HTTP layer extension into Scapy...')
     import scapy
     target_path = os.path.join(
         os.path.dirname(scapy.__file__),
@@ -16,7 +16,7 @@ def install_into_scapy(a):
         'scapy_http/http.py'
     )
     shutil.copy2(source_path, target_path)
-    print 'done!'
+    print('done!')
 
 
 install.sub_commands.append(('install_into_scapy', install_into_scapy))
