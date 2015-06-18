@@ -54,7 +54,7 @@ def _dissect_headers(obj, s):
         del headers[canonical_name]
     if headers:
         obj.setfieldval(
-            'Additional-Headers', '\r\n'.join(headers.values()) + '\r\n')
+            'Additional-Headers', '\r\n'.join(list(headers.values())) + '\r\n')
     return first_line, body
 
 
