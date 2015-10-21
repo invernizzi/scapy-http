@@ -43,6 +43,7 @@ def _dissect_headers(obj, s):
         HTTP packet, and the body
     '''
     first_line, headers, body = _parse_headers(s)
+    obj.setfieldval('Headers', '\r\n'.join(list(headers.values())))
     for f in obj.fields_desc:
         canonical_name = _canonicalize_header(f.name)
         try:
@@ -53,6 +54,7 @@ def _dissect_headers(obj, s):
         obj.setfieldval(f.name,  value.strip())
         del headers[canonical_name]
     if headers:
+        # Kept for compatibility
         obj.setfieldval(
             'Additional-Headers', '\r\n'.join(list(headers.values())) + '\r\n')
     return first_line, body
@@ -68,7 +70,7 @@ def _self_build(obj, field_pos_list=None):
         if not val:
             continue
         val += '\r\n'
-        if f.name in ['Method', 'Additional-Headers', 'Status-Line']:
+        if f.name in ['Method', 'Headers', 'Additional-Headers', 'Status-Line']:
             p = f.addfield(obj, p, val)
         else:
             p = f.addfield(obj, p, "%s: %s" % (f.name, val))
@@ -122,13 +124,14 @@ class HTTPRequest(Packet):
                 StrField("Expires", None, fmt="H"),
                 StrField("Last-Modified", None, fmt="H"),
                 StrField("Cookie", None, fmt="H"),
+                StrField("Headers", None, fmt="H"),
+                # Deprecated
                 StrField("Additional-Headers", None, fmt="H")]
 
     def do_dissect(self, s):
         ''' From the HTTP packet string, populate the scapy object '''
         first_line, body = _dissect_headers(self, s)
         Method, Path, HTTPVersion = re.split("\s+", first_line)
-        
         self.setfieldval('Method', Method)
         self.setfieldval('Path', Path)
         self.setfieldval('Http-Version', HTTPVersion)
@@ -172,6 +175,8 @@ class HTTPResponse(Packet):
                 StrField("Content-Type", None, fmt="H"),
                 StrField("Expires", None, fmt="H"),
                 StrField("Last-Modified", None, fmt="H"),
+                StrField("Headers", None, fmt="H"),
+                # Deprecated
                 StrField("Additional-Headers", None, fmt="H")]
 
     def do_dissect(self, s):
