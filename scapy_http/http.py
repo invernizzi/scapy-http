@@ -21,7 +21,10 @@ def _parse_headers(s):
       - the headers in a dictionary
       - the body '''
     try:
-        headers, body = s.split("\r\n\r\n", 1)
+        crlfcrlf = b"\x0d\x0a\x0d\x0a"
+        crlfcrlfIndex = s.find(crlfcrlf)
+        headers = s[:crlfcrlfIndex + len(crlfcrlf)].decode("utf-8")
+        body = s[crlfcrlfIndex + len(crlfcrlf):]
     except:
         headers = s
         body = ''
@@ -206,7 +209,8 @@ class HTTP(Packet):
                 r"(?:.+?) "
                 r"HTTP/\d\.\d$"
             )
-            req = payload[:payload.index("\r\n")]
+            crlfIndex = payload.index("\r\n".encode())
+            req = payload[:crlfIndex].decode("utf-8")
             result = prog.match(req)
             if result:
                 return HTTPRequest
