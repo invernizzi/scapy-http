@@ -14,5 +14,5 @@ except ImportError:
 
 packets = scapy.rdpcap('example_network_traffic.pcap')
 for p in packets:
-    print '=' * 78
+    print('=' * 78)
     p.show()
