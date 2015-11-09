@@ -67,12 +67,12 @@ def _self_build(obj, field_pos_list=None):
     ''' Takse an HTTPRequest or HTTPResponse object, and creates its internal
     scapy representation as a string. That is, generates the HTTP
     packet as a string '''
-    p = ""
+    p = b""
     for f in obj.fields_desc:
         val = obj.getfieldval(f.name)
         if not val:
             continue
-        val += '\r\n'
+        val += b"\x0d\x0a\x0d\x0a" # '\r\n'
         if f.name in ['Method', 'Headers', 'Additional-Headers', 'Status-Line']:
             p = f.addfield(obj, p, val)
         else:
