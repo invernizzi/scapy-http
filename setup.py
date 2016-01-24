@@ -3,7 +3,7 @@ from distutils.command.install import install
 import os.path
 import shutil
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def install_into_scapy(a):
