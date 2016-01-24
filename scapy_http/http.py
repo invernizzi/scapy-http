@@ -65,15 +65,25 @@ def _self_build(obj, field_pos_list=None):
     scapy representation as a string. That is, generates the HTTP
     packet as a string '''
     p = ""
+    # Walk all the fields, in order
     for f in obj.fields_desc:
+        if f.name not in ['Method', 'Path', 'Status-Line', 'Http-Version',
+            'Headers']:
+          # Additional fields added for user-friendliness should be ignored
+          continue
+        # Get the field value
         val = obj.getfieldval(f.name)
-        if not val:
-            continue
-        val += '\r\n'
-        if f.name in ['Method', 'Headers', 'Additional-Headers', 'Status-Line']:
-            p = f.addfield(obj, p, val)
+        # Fields used in the first line have a space as a separator, whereas
+        # headers are terminated by a new line
+        if f.name in ['Method', 'Path', 'Status-Line']:
+          separator = ' '
         else:
-            p = f.addfield(obj, p, "%s: %s" % (f.name, val))
+          separator = '\r\n'
+        # Add the field into the packet
+        p = f.addfield(obj, p, val + separator)
+    if p:  # The packet might be empty, and in that case it should stay empty.
+      # Add an additional line after the last header
+      p = f.addfield(obj, p, '\r\n')
     return p
 
 
