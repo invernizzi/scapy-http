@@ -21,7 +21,10 @@ def _parse_headers(s):
       - the headers in a dictionary
       - the body '''
     try:
-        headers, body = s.split("\r\n\r\n", 1)
+        crlfcrlf = b"\x0d\x0a\x0d\x0a"
+        crlfcrlfIndex = s.find(crlfcrlf)
+        headers = s[:crlfcrlfIndex + len(crlfcrlf)].decode("utf-8")
+        body = s[crlfcrlfIndex + len(crlfcrlf):]
     except:
         headers = s
         body = ''
@@ -64,7 +67,8 @@ def _self_build(obj, field_pos_list=None):
     ''' Takse an HTTPRequest or HTTPResponse object, and creates its internal
     scapy representation as a string. That is, generates the HTTP
     packet as a string '''
-    p = ""
+    p = b""
+    newline = b'\x0d\x0a'  # '\r\n'
     # Walk all the fields, in order
     for f in obj.fields_desc:
         if f.name not in ['Method', 'Path', 'Status-Line', 'Http-Version',
@@ -76,12 +80,13 @@ def _self_build(obj, field_pos_list=None):
         # Fields used in the first line have a space as a separator, whereas
         # headers are terminated by a new line
         if f.name in ['Method', 'Path', 'Status-Line']:
-          separator = ' '
+          separator = b' '
         else:
-          separator = '\r\n'
+          separator = newline
         # Add the field into the packet
         p = f.addfield(obj, p, val + separator)
-    if p:  # The packet might be empty, and in that case it should stay empty.
+    # The packet might be empty, and in that case it should stay empty.
+    if p:
       # Add an additional line after the last header
       p = f.addfield(obj, p, '\r\n')
     return p
@@ -216,7 +221,8 @@ class HTTP(Packet):
                 r"(?:.+?) "
                 r"HTTP/\d\.\d$"
             )
-            req = payload[:payload.index("\r\n")]
+            crlfIndex = payload.index("\r\n".encode())
+            req = payload[:crlfIndex].decode("utf-8")
             result = prog.match(req)
             if result:
                 return HTTPRequest

@@ -1,7 +1,7 @@
 Scapy-http
 ==========
 
-Support for parsing HTTP in Scapy (http://www.secdev.org/projects/scapy/).
+Support for parsing HTTP in [Scapy](http://www.secdev.org/projects/scapy/). Compatible with [Scapy3k](https://github.com/phaethon/scapy).
 
 
 Installation
