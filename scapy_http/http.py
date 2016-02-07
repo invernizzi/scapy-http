@@ -14,8 +14,18 @@ def _canonicalize_header(name):
         and returns a canonical representation of it '''
     return name.strip().lower()
 
-
 def _parse_headers(s):
+    headers = s.split("\r\n")
+    headers_found = {}
+    for header_line in headers:
+        try:
+            key, value = header_line.split(':', 1)
+        except:
+            continue
+        headers_found[_canonicalize_header(key)] = header_line.strip()
+    return headers_found
+
+def _parse_headers_and_body(s):
     ''' Takes a HTTP packet, and returns a tuple containing:
       - the first line (e.g., "GET ...")
       - the headers in a dictionary
@@ -28,16 +38,8 @@ def _parse_headers(s):
     except:
         headers = s
         body = ''
-    headers = headers.split("\r\n")
-    first_line, headers = headers[0].strip(), headers[1:]
-    headers_found = {}
-    for header_line in headers:
-        try:
-            key, value = header_line.split(':', 1)
-        except:
-            continue
-        headers_found[_canonicalize_header(key)] = header_line.strip()
-    return first_line, headers_found, body
+    first_line, headers = headers.split("\r\n", 1)
+    return first_line.strip(), _parse_headers(headers), body
 
 
 def _dissect_headers(obj, s):
@@ -45,7 +47,7 @@ def _dissect_headers(obj, s):
         (either HTTPResponse or HTTPRequest). Returns the first line of the
         HTTP packet, and the body
     '''
-    first_line, headers, body = _parse_headers(s)
+    first_line, headers, body = _parse_headers_and_body(s)
     obj.setfieldval('Headers', '\r\n'.join(list(headers.values())))
     for f in obj.fields_desc:
         canonical_name = _canonicalize_header(f.name)
@@ -63,8 +65,28 @@ def _dissect_headers(obj, s):
     return first_line, body
 
 
+def _get_field_value(obj, name):
+    ''' Returns the value of a packet field.'''
+    val = obj.getfieldval(name)
+    if name != 'Headers':
+        return val
+    # Headers requires special handling, as we give a parsed representation of it.
+    headers = _parse_headers(val)
+    val = []
+    for header_name in headers:
+        try:
+            header_value = obj.getfieldval(header_name.capitalize())
+            # If we provide a parsed representation for this header
+            headers[header_name] = header_value
+            val.append('%s: %s' % (header_name.capitalize(), header_value))
+        except AttributeError as e:
+            # If we don't provide a parsed representation
+            val.append(headers[header_name])
+    return '\r\n'.join(val)
+
+
 def _self_build(obj, field_pos_list=None):
-    ''' Takse an HTTPRequest or HTTPResponse object, and creates its internal
+    ''' Takes an HTTPRequest or HTTPResponse object, and creates its internal
     scapy representation as a string. That is, generates the HTTP
     packet as a string '''
     p = b""
@@ -76,7 +98,7 @@ def _self_build(obj, field_pos_list=None):
           # Additional fields added for user-friendliness should be ignored
           continue
         # Get the field value
-        val = obj.getfieldval(f.name)
+        val = _get_field_value(obj, f.name)
         # Fields used in the first line have a space as a separator, whereas
         # headers are terminated by a new line
         if f.name in ['Method', 'Path', 'Status-Line']:
