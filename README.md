@@ -3,6 +3,9 @@ Scapy-http
 
 Support for parsing HTTP in [Scapy](http://www.secdev.org/projects/scapy/). Compatible with [Scapy3k](https://github.com/phaethon/scapy).
 
+Collaborator wanted!
+--------
+Hi there, internet stranger! As time is a scarce resource for me nowadays, I'm looking for a collaborator to handle issues and pull requests in a more timely manner. If you are interested, send me an email at `invernizzi.l@gmail.com`. 
 
 Installation
 --------
