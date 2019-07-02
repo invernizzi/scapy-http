@@ -1,6 +1,20 @@
+
+OBSOLETE!
+=========
+Scapy 2.4.3+ has [native](https://github.com/secdev/scapy/pull/1925) support for HTTP.  It has the same syntax as this package (isn't that nice), plus it packs more features!
+
+Please consider this package as obsolete - long live Scapy!
+
+__DEPRECATED!__
+__DEPRECATED!__
+__DEPRECATED!__
+
+
+
+
+
 Scapy-http
 ==========
-
 Support for parsing HTTP in [Scapy](http://www.secdev.org/projects/scapy/). Compatible with [Scapy3k](https://github.com/phaethon/scapy).
 
 Collaborator wanted!
