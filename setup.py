@@ -57,8 +57,11 @@ setup(
     author_email=['invernizzi.l@gmail.com'],
     url='https://github.com/invernizzi/scapy-http',
     download_url='https://github.com/invernizzi/scapy-http/tarball/' + VERSION,
-    keywords=['http', 'scapy', 'newtork', 'dissect', 'packets'],
+    keywords=['http', 'scapy', 'network', 'dissect', 'packets'],
     cmdclass={
         'install': InstallCommand,
     },
+    classifiers=[
+        'Development Status :: 7 - Inactive'
+    ]
 )
